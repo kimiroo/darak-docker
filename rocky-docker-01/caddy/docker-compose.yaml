@@ -1,0 +1,40 @@
+services:
+  caddy-proxy:
+    container_name: caddy-proxy
+    image: ghcr.io/kimiroo/caddy-cf:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+    volumes:
+      - ./config:/etc/caddy
+      - caddy_data:/data
+      - caddy_config:/config
+    secrets:
+      - cf_api_token
+      - gts_eab_key_id
+      - gts_eab_hmac_key
+    # Lets Caddy reach services running with network_mode: host (Home Assistant)
+    # via host.docker.internal. Points at the caddy-bridge gateway
+    # (pinned in the root docker-compose.yaml)
+    extra_hosts:
+      - "host.docker.internal:172.31.0.1"
+    environment:
+      - ACME_EMAIL=${ACME_EMAIL:?set ACME_EMAIL in .env}
+    networks:
+      - caddy-bridge
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+secrets:
+  cf_api_token:
+    file: /home/yongj/.secrets/cf_api_token
+  gts_eab_key_id:
+    file: /home/yongj/.secrets/gts_eab_key_id
+  gts_eab_hmac_key:
+    file: /home/yongj/.secrets/gts_eab_hmac_key

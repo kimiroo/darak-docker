@@ -1,0 +1,35 @@
+{
+    email {$ACME_EMAIL}
+    acme_ca https://dv.acme-v02.api.pki.goog/directory
+    acme_eab {
+        key_id {file./run/secrets/gts_eab_key_id}
+        mac_key {file./run/secrets/gts_eab_hmac_key}
+    }
+    key_type p256
+}
+
+# Secure tunnel between the k3s Envoy and the services on this node.
+(mtls-backend) {
+    tls {
+        dns cloudflare {file./run/secrets/cf_api_token}
+        client_auth {
+            mode require_and_verify
+            trust_pool file {
+                pem_file /etc/caddy/step-ca/backend_intermediate_ca.crt
+            }
+        }
+    }
+}
+
+*.rocky-docker-01.internal.darak.dev {
+    import mtls-backend
+
+    @homeassistant host homeassistant.rocky-docker-01.internal.darak.dev
+    handle @homeassistant {
+        reverse_proxy host.docker.internal:8123
+    }
+
+    handle {
+        respond "not found" 404
+    }
+}

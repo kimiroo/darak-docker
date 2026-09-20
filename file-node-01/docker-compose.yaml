@@ -1,0 +1,4 @@
+name: root
+
+include:
+  - ./o11y/docker-compose.yaml
