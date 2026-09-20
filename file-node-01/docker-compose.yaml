@@ -1,4 +1,16 @@
 name: root
 
 include:
-  - ./o11y/docker-compose.yaml
+  - ./caddy/docker-compose.yaml
+  - ./victoria-logs/docker-compose.yaml
+  - ./victoria-metrics/docker-compose.yaml
+  - ./watchtower/docker-compose.yaml
+
+networks:
+  caddy-bridge:
+    name: caddy-bridge
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24
+          gateway: 172.31.0.1

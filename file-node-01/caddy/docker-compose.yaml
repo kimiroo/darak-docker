@@ -17,11 +17,6 @@ services:
       - cf_api_token
       - gts_eab_key_id
       - gts_eab_hmac_key
-    # Lets Caddy reach services running with network_mode: host (Home Assistant)
-    # via host.docker.internal. Points to the caddy-bridge gateway
-    # (pinned in the root docker-compose.yaml).
-    extra_hosts:
-      - "host.docker.internal:172.31.0.1"
     environment:
       - ACME_EMAIL=${ACME_EMAIL:?set ACME_EMAIL in .env}
     networks:

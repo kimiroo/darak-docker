@@ -1,0 +1,16 @@
+name: victoria-metrics
+
+services:
+  victoria-metrics:
+    container_name: victoria-metrics
+    image: quay.io/victoriametrics/victoria-metrics:latest
+    restart: unless-stopped
+    volumes:
+      - /mnt/o11y/metrics:/data
+    command:
+      - "-storageDataPath=/data"
+      - "-retentionPeriod=1y"
+    networks:
+      - caddy-bridge
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

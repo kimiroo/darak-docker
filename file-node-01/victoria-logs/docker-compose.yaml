@@ -1,0 +1,17 @@
+name: victoria-logs
+
+services:
+  victoria-logs:
+    container_name: victoria-logs
+    image: quay.io/victoriametrics/victoria-logs:latest
+    restart: unless-stopped
+    volumes:
+      - /mnt/o11y/logs:/data
+    command:
+      - "-storageDataPath=/data"
+      - "-retentionPeriod=30d"
+      - "-retention.maxDiskUsagePercent=90"
+    networks:
+      - caddy-bridge
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

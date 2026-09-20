@@ -2,13 +2,14 @@ name: root
 
 include:
   - ./caddy/docker-compose.yaml
+  - ./watchtower/docker-compose.yaml
 
 networks:
   caddy-bridge:
     name: caddy-bridge
     driver: bridge
     # The gateway is referenced by extra_hosts in caddy/docker-compose.yaml;
-    # keep them in sync.
+    # keep the two in sync.
     ipam:
       config:
         - subnet: 172.31.0.0/24
