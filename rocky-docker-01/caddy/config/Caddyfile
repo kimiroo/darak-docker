@@ -34,6 +34,11 @@
 		reverse_proxy host.docker.internal:8123
 	}
 
+	@go2rtc host go2rtc.rocky-docker-01.internal.darak.dev
+	handle @go2rtc {
+		reverse_proxy go2rtc:1984
+	}
+
 	handle {
 		respond "not found" 404
 	}

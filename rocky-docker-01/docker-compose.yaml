@@ -4,6 +4,7 @@ include:
   - ./caddy/docker-compose.yaml
   - ./homeassistant/docker-compose.yaml
   - ./matterjs-server/docker-compose.yaml
+  - ./go2rtc/docker-compose.yaml
   - ./watchtower/docker-compose.yaml
 
 networks:

@@ -1,0 +1,14 @@
+name: go2rtc
+
+services:
+  go2rtc:
+    container_name: go2rtc
+    image: alexxit/go2rtc:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA_PATH:-${HOME}/docker-data}/go2rtc:/config
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - caddy-bridge
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
