@@ -1,0 +1,20 @@
+name: homeassistant
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: ghcr.io/home-assistant/home-assistant:stable
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ${DOCKER_DATA_PATH:-${HOME}/docker-data}/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+    devices:
+      - ${ZIGBEE_DONGLE_PATH:-/dev/ttyUSB0}:/dev/ttyUSB0
+    environment:
+      TZ: Asia/Seoul
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
