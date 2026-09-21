@@ -5,6 +5,9 @@ services:
     container_name: go2rtc
     image: alexxit/go2rtc:latest
     restart: unless-stopped
+    ports:
+      - "8555:8555/tcp"
+      - "8555:8555/udp"
     volumes:
       - ${DOCKER_DATA_PATH:-${HOME}/docker-data}/go2rtc:/config
       - /etc/localtime:/etc/localtime:ro
