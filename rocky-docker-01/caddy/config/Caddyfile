@@ -6,6 +6,11 @@
 		mac_key {file./run/secrets/gts_eab_hmac_key}
 	}
 	key_type p256
+
+	servers {
+		# Envoy (k3s nodes) as seen by Caddy.
+		trusted_proxies static 10.10.20.0/24
+	}
 }
 
 # Secure tunnel between the k3s Envoy and the services on this node.
