@@ -36,7 +36,10 @@
 
 	@go2rtc host go2rtc.rocky-docker-01.internal.darak.dev
 	handle @go2rtc {
-		reverse_proxy go2rtc:1984
+		reverse_proxy go2rtc:1984 {
+			# Restore original Host
+			header_up Host {header.X-Forwarded-Host}
+		}
 	}
 
 	handle {
