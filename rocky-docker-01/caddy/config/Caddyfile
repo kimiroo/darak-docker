@@ -42,6 +42,14 @@
 		}
 	}
 
+	@ice-server host ice-server.rocky-docker-01.internal.darak.dev
+	handle @ice-server {
+		reverse_proxy ice-server:28080 {
+			# Restore original Host
+			header_up Host {header.X-Forwarded-Host}
+		}
+	}
+
 	handle {
 		respond "not found" 404
 	}
