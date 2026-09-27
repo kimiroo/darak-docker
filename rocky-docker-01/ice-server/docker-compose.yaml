@@ -1,0 +1,14 @@
+name: ice-server
+
+services:
+  ice-server:
+    container_name: ice-server
+    image: kimiroo/ice-server:latest
+    restart: unless-stopped
+    volumes:
+      - ${DOCKER_DATA_PATH:-${HOME}/docker-data}/ice-server/config.json:/config.json
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - caddy-bridge
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
