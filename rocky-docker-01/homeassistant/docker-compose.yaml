@@ -8,6 +8,7 @@ services:
     network_mode: host
     volumes:
       - ${DOCKER_DATA_PATH:-${HOME}/docker-data}/homeassistant:/config
+      - ${HOME}/ice-ha:/config/custom_components/ice_ha
       - /etc/localtime:/etc/localtime:ro
     devices:
       - ${ZIGBEE_DONGLE_PATH:-/dev/ttyUSB0}:/dev/ttyUSB0
